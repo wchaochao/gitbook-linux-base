@@ -127,11 +127,9 @@ chmod 1755 test; ls -l test
  -rws--x--x 1 root root 0 Jun 16 02:53 test1
 ```
 
-
-
 ## 文件属性
 
-![文件属性](https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/img/centos7_0210filepermission_2.gif)
+![文件属性](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/file-attr.gif)
 
 ### 文件类型
 
@@ -731,5 +729,5 @@ find / -mtime 0
 find /etc -newer /etc/passwd
 find / -name passwd
 find /etc -name '*httpd*'
-find /usr/bin /usr/sbin -perm /7000 -exec ls -l  {} \
+find /usr/bin /usr/sbin -perm /7000 -exec ls -l  {} \;
 ```
