@@ -88,7 +88,7 @@ umask 002
  * 文件为二进制程序文件时，使用者在执行文件时会暂时拥有文件拥有者的权限
 * `SGID`: Set UID，当s出现在文件所属群组的 x 权限上时
  * 文件为二进制程序文件时，使用者在执行该文件时会暂时拥有文件所属群组的权限
- * 文件为目录时，使用者在此目录下的有效群组为文件所属群组
+ * 文件为目录时，使用者在此目录下的新建文件的群组为文件所属群组
 * `SBIT`: Sticky Bit，当s出现在其他人的 x 权限上时
  * 文件为目录时，仅有该目录下的文件/目录创建者与 root 能够删除自己的目录或文件
 
@@ -97,7 +97,7 @@ umask 002
 ls -l /usr/bin/passwd
 -rwsr-xr-x. 1 root root 27832 Jun 10  2014 /usr/bin/pass
 
-# SGID
+# SGID 群组管理目录
 ls -l /usr/bin/locate
 -rwx--s--x. 1 root slocate 40496 Jun 10  2014 /usr/bin/locate
 
@@ -147,7 +147,10 @@ chmod 1755 test; ls -l test
 
 ### 链接数
 
-当前文件的链接数
+当前文件的inode的链接数
+
+* 创建硬链接文件时，链接数加一
+* 创建目录时，当前目录链接数为2，父目录链接数加一（有`.`和`..`）
 
 ### 容量大小
 
@@ -715,6 +718,18 @@ find <path> -name <file>
 # 对搜索到的文件进行处理
 # {} - 找到的文件，\; - 处理结束
 find <path> -exec <command>
+
+# 将结果打印到屏幕上，默认动作
+find <path> -print
+
+# 条件非
+find <path> ! <condition1>
+
+# 条件与
+find <path> <condition1> -a <condition2>
+
+# 条件或
+find <path> <condition1> -o <condition2>
 ```
 
 示例
@@ -730,4 +745,7 @@ find /etc -newer /etc/passwd
 find / -name passwd
 find /etc -name '*httpd*'
 find /usr/bin /usr/sbin -perm /7000 -exec ls -l  {} \;
+find /etc -size +50k -a -size -60k -exec ls -l { } \;
+find /etc -size +50k -a ! -user root -type f -exec ls -l {} \;
+find /etc -size +1500k -o -size 0
 ```

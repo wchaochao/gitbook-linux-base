@@ -87,6 +87,11 @@ Hard Disk Drive, HDD
 
 ![硬盘组成](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/disk.jpg)
 
+* 扇区：最小的物理储存单位，主要有512Bytes 与4K 两种格式
+* 磁道：扇区组成的同心圆
+* 柱面：多个盘片的同一磁道组成柱面
+* 分区：按柱面分区和扇区分区
+
 #### 缓冲内存
 
 可以将硬盘内常使用的数据高速缓存起来，以加速系统的读取性能
