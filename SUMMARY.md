@@ -9,3 +9,5 @@
 * [文件](lib/file.md)
 * [目录](lib/directory.md)
 * [文件系统](lib/filesystem.md)
+* [磁盘管理](lib/disk.md)
+* [文件压缩](compress.md)

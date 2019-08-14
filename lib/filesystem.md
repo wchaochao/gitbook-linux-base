@@ -16,17 +16,17 @@
 * `inode`: 记录文件的属性，一个文件占用一个inode，同时记录此文件的数据所在的block号码
 * `data block`: 记录文件的内容，若文件太大时，会占用多个block
 
-![索引式文件系统](https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/img/filesystem-1.jpg)
+![索引式文件系统](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/index-filesystem.jpg)
 
 ## FAT文件系统
 
-![FAT文件系统](https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/img/filesystem-2.jpg)
+![FAT文件系统](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/fat-filesystem.jpg)
 
 ## EXT2文件系统
 
 区分为多个区块群组（block group） 的，每个区块群组都有独立的inode/block/superblock 系统
 
-![EXT2文件系统](https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/img/ext2_filesystem.jpg)
+![EXT2文件系统](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/ext2-filesystem.jpg)
 
 ### Superblock
 
@@ -116,6 +116,9 @@
 将文件系统与目录树结合
 
 ```bash
+# 查看测试挂载文件系统的顺序
+cat /etc/filesystems
+
 # 查看支持的文件系统
 ls -l /lib/modules/$（uname -r）/kernel/fs
 
@@ -183,7 +186,7 @@ xfs_info <device>
 
 Virtual Filesystem Switch，用于管理挂载的文件系统
 
-![VFS](https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/img/centos7_vfs.gif)
+![VFS](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/vfs.gif)
 
 ## 操作
 
@@ -246,7 +249,7 @@ du -S
 du -k
 
 # 按MB显示
-du -k
+du -m
 
 # 按合适容量显示
 du -h
@@ -269,10 +272,7 @@ du -sm /*
  * 删除源文件时，硬链接文件仍能打开
 * `symbolic Link`: 软链接，指向一个新inode，该inode对应的block记录源文件位置
  * 修改软链接文件时，源文件也会改变
- * 删除源文件时，软链接文件仍能打开
-
-![hard link](https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/img/hard_link1.gif)
-
+ * 删除源文件时，软链接文件不能打开
 
 ```bash
 # 创建硬链接

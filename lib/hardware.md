@@ -17,6 +17,11 @@
 | 鼠标 | /dev/input/mouse[0-15] （通用） /dev/psaux （PS/2界面） /dev/mouse （当前鼠标） |
 | 打印机| /dev/lp[0-2] （25针打印机） /dev/usb/lp[0-15] （USB 接口） |
 
+磁盘文件名
+
+* /dev/sd[ap][1-128]：为实体磁盘的磁盘文件名
+* /dev/vd[ad][1-128]：为虚拟磁盘的磁盘文件名
+
 ## 磁盘分区
 
 ### MBR分区格式
@@ -48,12 +53,12 @@
 
 ### GPT分区格式
 
-使用34个LBA区块来纪录分区信息，整个磁盘的最后33个LBA作为备份
+使用34个LBA区块来记录分区信息，整个磁盘的最后33个LBA作为备份
 
 * LBA：逻辑区块位址（Logical Block Address, LBA），默认为512Bytes，从0开始编号
 * LBA0：MBR相容区块，前446Bytes存储开机管理程序，后64Bytes仅放入一个特殊标志表示为GPT 格式
-* LBA1：GPT表头纪录，纪录了分区表本身的位置与大小，同时纪录了备份用的GPT分区放置的位置，以及分区表的检验机制码
-* LBA2-33：实际纪录分区信息处，每个LBA都可以纪录4笔分区纪录
+* LBA1：GPT表头记录，记录了分区表本身的位置与大小，同时记录了备份用的GPT分区放置的位置，以及分区表的检验机制码
+* LBA2-33：实际记录分区信息处，每个LBA都可以记录4笔分区录
 
 ![GPT分区格式](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/gpt.jpg)
 

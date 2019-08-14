@@ -7,12 +7,14 @@
 ## Centos7安装
 
 * U盘刻录Centos7镜像，进入BIOS，选择U盘开机或者使用虚拟机安装
-* 选择安装模式
+* 选择安装模式，使用GPT分区
 * 设置语言、时间、键盘
 * 软件选择
 * 磁盘分区
 * 网络设置
 * 设置root密码，添加用户
+
+![centos7-gpt](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/centos7_gpt.jpg)
 
 ## 术语
 
@@ -98,7 +100,7 @@ shutdown [-krhc] [时间] [警告信息]
 -r     ： 在将系统的服务停掉之后重新开机
 -h     ： 在将系统的服务停掉之后立即开机
 -c     ： 取消已经在进行的shutdown命令
-时间   ： 指定shutdown执行的世界，默认为1分钟
+时间   ： 指定shutdown执行的时间，默认为1分钟
 警告   ： 给线上使用者发送警告信息
 
 # example
@@ -118,7 +120,7 @@ halt
 poweroff
 
 # 系统重启
-# reboot
+reboot
 ```
 
 ### systemctl关机

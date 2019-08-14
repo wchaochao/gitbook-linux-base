@@ -300,7 +300,7 @@ ls -t
 ls --color={never, always, auto}
 
 # 显示表示文件类型的符号
-# *:代表可可执行文件； /:代表目录； =:代表 socket 文件； |:代表 FIFO 文件；
+# *:代表可执行文件； /:代表目录； =:代表 socket 文件； |:代表 FIFO 文件；
 ls -F
 ```
 
@@ -326,10 +326,10 @@ touch <file>
 touch -c <file>
 
 # 修改mtime为当前时间
-touch -m <time> <file>
+touch -m <file>
 
 # 修改atime为当前时间
-touch -a <time> <file>
+touch -a <file>
 
 # 修改mtime/atime为指定时间
 touch -d <time> <file>
@@ -490,7 +490,7 @@ cat -A <file>
 
 ```bash
 # 从最后一行开始查阅文件内容
-cat <file>
+tac <file>
 ```
 
 ### nl
@@ -533,8 +533,8 @@ more <file>
 按页显示文件内容，可以向前翻页
 
 ```bash
-# 进入more翻页查阅环境
-more <file>
+# 进入less翻页查阅环境
+less <file>
 ```
 
 * `Space`: 向下翻页
@@ -678,7 +678,7 @@ find <...path>
 find <path> -type <type>
 
 # 按权限查找
-# <mode> - 文件权限等于mode, -<mode> - 文件权限囊括全部mode, <mode> - 文件权限囊括任一身份mode
+# <mode> - 文件权限等于mode, -<mode> - 文件权限囊括全部mode, /<mode> - 文件权限囊括任一身份mode
 find <path> -perm {<mode>, -<mode>, /<mode>}
 
 # 按uid查找
