@@ -316,7 +316,7 @@ mount -n -o remount,rw /
 
 ### loop挂载
 
-挂载光盘
+挂载镜像文件
 
 ```bash
 mount -o loop <iso> <mountpoint>
