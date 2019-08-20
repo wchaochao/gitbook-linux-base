@@ -12,3 +12,4 @@
 * [磁盘管理](lib/disk.md)
 * [文件压缩](compress.md)
 * [文件备份](backup.md)
+* [vim编辑器](vim.md)
