@@ -14,8 +14,7 @@
 * 编辑模式：输入`i, o, a, r`进入编辑模式，可以编辑文件，按`ESC`回到命令模式
 * 命令行模式：输入`:, /, ?`进入命令行模式，可以搜索、保存、离开，按`ESC`回到命令模式
 
-![vim快捷键](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/vfs.gif)
-vim-shortcut.jpg)
+![vim快捷键](https://raw.githubusercontent.com/wchaochao/images/master/gitbook-linux-base/vim-shortcut.jpg)
 
 ## 命令模式
 
@@ -38,10 +37,10 @@ vi <file>
 | $/End | 移动到当前行结尾 |
 | + | 移动到下一行非空白处 |
 | - | 移动到上一行非空白处 |
+| n + Enter | 向下移动n行 |
 | G | 移动到最后一行 |
 | gg | 移动到第一行 |
 | n + G | 移动到第n行 |
-| n + Enter | 向下移动n行 |
 | H | 移动到当前页的开头 |
 | M | 移动到当前页的中间 |
 | L | 移动到当前页的结尾 |
@@ -98,7 +97,7 @@ vi <file>
 | 按键 | 操作 |
 | --- | --- |
 | i | 在光标处插入 |
-| I | 在光标所在行的非空白字符处插入 |
+| I | 在光标所在行的行首的空白字符处插入 |
 | a | 在光标的下一个字符处插入 |
 | A | 在光标所在行的行尾处插入 |
 | o | 向下插入 |
