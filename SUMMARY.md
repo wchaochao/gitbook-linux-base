@@ -11,6 +11,5 @@
 * [文件系统](lib/filesystem.md)
 * [磁盘管理](lib/disk.md)
 * [文件压缩](lib/compress.md)
-* [文件备份](lib/backup.md)
-* [vim编辑器](lib/vim.md)
+* [Vim编辑器](lib/vim.md)
 * [Bash](lib/bash.md)

@@ -4,6 +4,23 @@
 
 ---
 
+## Shell
+
+与操作系统核心沟通的壳
+
+* `sh`: Bourne Shell，第一个Shell
+* `csh`: C Shell，语法类似C语言
+* `bash`: Bourne Again Shell，sh的增强版本
+* `tcsh`: csh的增强版本
+
+```bash
+# 查看可使用的shells
+cat /etc/shells
+
+# 查看登录后取得的shell
+cat /etc/passwd
+```
+
 ## 组成
 
 ```bash
@@ -13,14 +30,19 @@ $ command [options] ...arg
 * `command`: 命令或可执行文件（绝对路径或相对路径），如`cd`
 * `options`: 选项，可多个，如`-h, --help`
 * `arg`: 参数，可多个
-* `space`: 分隔命令、选项、参数
-* `enter`: 执行命令
+* `Space`: 分隔命令、选项、参数
+* `\Enter`: 多行命令
+* `Enter`: 执行命令
  * 输出执行结果
  * 进入执行程序工作环境
 
 ## 快捷键
 
 * `Tab`: 自动补全
+* `Ctrl + A`: 跳转到命令开头
+* `Ctrl + E`: 跳转到命令结尾
+* `Ctrl + U`: 删除光标到命令开头的字符
+* `Ctrl + K`: 删除光标到命令结尾的字符
 * `Ctrl + C`: 中断命令
 * `Ctrl + D`: 退出
 * `Shift + PageUp`: 向前翻页
@@ -177,12 +199,15 @@ nano <file>
 ### 语言命令
 
 ```bash
-# 当前终端的语言
+# 查看支持的语言
+locale -a
+
+# 查看当前的语言变量
 locale
 
 # 修改为英文
-LANG=en_US.utf8
-export LC_ALL=en_US.utf8
+LANG=en_US.utf8 # 主语言环境
+export LC_ALL=en_US.utf8 # 整体语系的环境
 ```
 
 ### 日期命令
