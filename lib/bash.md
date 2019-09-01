@@ -6,22 +6,12 @@
 
 Bourne Again Shell，Linux的默认Shell
 
-## 特点
-
 * 历史记录：在内存中记录本次登录执行过的命令，登出时会记录到~/.bash_history中
 * Tab补全：使用Tab补全命令或文件名
 * 别名设置：使用alias查看和设置命令别名
 * 后台任务：可将当前任务丢到后台去执行
 * shell脚本：使用sell脚本执行一系列指令
 * glob匹配：可使用glob进行匹配
-
-```bash
-# 查看别名
-alias
-
-# 设置别名
-alias <name>="command [options] ...arg"
-```
 
 ## 变量
 
@@ -79,7 +69,7 @@ set
  * `\@`: 12小时的"am/pm"
  * `\v`: bash的版本
  * `\#`: 下达的第几个指令
- * `$`: 提示字符，root为#，user为$
+ * `\$`: 提示字符，root为#，user为$
 * `$`: Shell的PID（线程ID）
 * `?`: 上一个指令的回传值
  * 成功回传0
@@ -175,11 +165,169 @@ read -t <n> <variable>
 
 ### declare
 
-声明变量类型
+声明变量类型，默认为字符串
 
 ```bash
-# 显示所有变量
+# 查看所有变量
 declare
+
+# 查看变量声明
+declare -p <variable>
+
+# 变量声明为整数
+declare -i <variable>
+
+# 变量声明为数组
+declare -a <variable>
+
+# 变量声明为只读
+declare -r <variable>
+
+# 变量声明为环境变量
+declare -x <variable>
+
+# 取消声明为环境变量
+declare +x <variable>
+```
+
+示例
+
+```bash
+sum=100+300+50
+echo ${sum} # 100+300+50
+
+declare -i sum=100+300+50
+echo ${sum} # 450
+```
+
+### 过滤
+
+过滤开头或结尾
+
+```bash
+# 从开头开始过滤最短匹配
+${<variable>#<match>}
+
+# 从开头开始过滤最长匹配
+${<variable>##<match>}
+
+# 从结尾开始过滤最短匹配
+${<variable>%<match>}
+
+# 从结尾开始过滤最长匹配
+${<variable>%%<match>}
+```
+
+示例
+
+```bash
+mail=/var/spool/mail/dmtsai
+
+echo ${mail#/*/} # spool/mail/dmtsai
+echo ${mail##/*/} # dmtsai
+echo ${mail%/*} # /var/spool/mail
+echo ${mail%%/spool/*} # /var
+```
+
+### 替换
+
+```bash
+# 替换第一个
+${<variable>/old/new}
+
+# 替换所有
+${<variable>//old/new}
+```
+
+示例
+
+```bash
+mail=/var/spool/mail/spool/dmtsai
+
+echo ${mail/spool/aaa} # /var/aaa/mail/spool/dmtsai
+echo ${mail//spool/aaa} # /var/aaa/mail/aaa/dmtsai
+```
+
+### 条件
+
+```bash
+# var2存在时，var1为var2的值
+# var2不存在时，var1为expr
+var1=${var2-expr}
+
+# var2存在且不为空字符串时，var1为var2的值
+# var2不存在或为空字符串时，var1为expr
+var1=${var2:-expr}
+
+# var2存在时，var1为var2的值
+# var2不存在时，输出expr
+var1=${var2?expr}
+
+# var2存在且不为空字符串时，var1为var2的值
+# var2不存在或为空字符串时，输出expr
+var1=${var2:?expr}
+
+# var2存在时，var1为var2的值
+# var2不存在时，var1、var2为expr
+var1=${var2=expr}
+
+# var2存在且不为空字符串时，var1为var2的值
+# var2不存在或为空字符串时，var1、var2为expr
+var1=${var2:=expr}
+
+# var2存在时，var1为expr
+# var2不存在时，var1为空字符串
+var1=${var2+expr}
+
+# var2存在且不为空字符串时，var1为expr
+# var2不存在或为空字符串时，var1为空字符串
+var1=${var2:+expr}
+```
+
+## 别名
+
+```bash
+# 查看别名
+alias
+
+# 设置别名
+alias <name>='command [options] ...arg'
+
+# 取消别名
+unalias <name>
+```
+
+示例
+
+```bash
+alias lm='ls -la | more'
+alias rm='rm -i'
+alias vi='vim'
+alias cls='clear'
+```
+
+## 历史命令
+
+### history
+
+* 登录时会读取~/.bash_history中的命令到当前Shell的历史命令中
+* 登出时会将dq
+
+```
+# 查看历史命令
+history
+
+# 查看最近n条
+history <n>
+
+# 清除历史命令
+history -c
+
+# 将histfile的内容读入到历史命令
+history -r [histfile]
+
+# 将历史命令写入指定文件中，默认为~/.bash_history
+history -w [histfile]
 ```
 
 ## 常用命令
@@ -215,4 +363,15 @@ bash
 exit
 ```
 
-### locale
+### ulimit
+
+资源配额
+
+```bash
+# 查看当前bash的所有配额
+ulimit -a
+
+# 设置配额
+# -a中有说明如何设置，如-f <size>，设置新建文件的最大容量
+ulimit <limit>
+```
