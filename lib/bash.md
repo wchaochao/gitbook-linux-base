@@ -6,12 +6,222 @@
 
 Bourne Again Shell，Linux的默认Shell
 
-* 历史记录：在内存中记录本次登录执行过的命令，登出时会记录到~/.bash_history中
-* Tab补全：使用Tab补全命令或文件名
-* 别名设置：使用alias查看和设置命令别名
-* 后台任务：可将当前任务丢到后台去执行
-* shell脚本：使用sell脚本执行一系列指令
-* glob匹配：可使用glob进行匹配
+## 欢迎界面
+
+* `/etc/issue`: 登录bash的欢迎界面
+* `/etc/issue.net`: 远程登录bash的欢迎界面
+
+| 代码 | 描述 |
+| --- | --- |
+| \l | 终端名称 |
+| \r | Linux版本 |
+| \m | 硬件等级 |
+| \S | 操作系统名称 |
+| \V | 操作系统版本 |
+| \d | 日期 |
+| \t | 时间 |
+| \O | 域名 |
+| \n | 网络名称名称 |
+
+```bash
+$ vim /etc/issue
+
+\S （terminal: \l）
+Date: \d \t
+Kernel \r on an \m
+Welcome!
+```
+
+## 配置文件
+
+bash启动时会读取配置文件
+
+* `login shell`: 需要登录的bash，如第一次登录Linux，会读取系统配置文件和个人配置文件
+* `non-login shell`: 不需要登录的bash，如子bash，读取~/.bashrc配置文件
+
+![login shell读取配置文件](https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/img/centos7_bashrc_1.gif)
+
+### 系统配置文件
+
+/etc/profile
+
+* 设置系统变量
+ * `USER`: 使用者账号
+ * `HOSTNAME`: 主机名
+ * `PATH`: 可执行文件路径
+ * `MAIL`: 邮箱
+ * `HISTSIZE`: 历史命令的最大条数
+ * `umask`: 文件/目录的默认权限mask
+* 执行`/etc/profile.d/*.sh`文件
+ * `/etc/profile.d/lang.sh`: 调用`/etc/locale.conf`设置语系
+ * `/etc/profile.d/bash_completion.sh`: 调用`/usr/share/bash-completion/completions/*`进行代码补全
+
+### 个人配置文件
+
+按下列顺序读取其中一个文件
+
+* ~/.bash_profile
+* ~/.bash_login
+* ~/.profile
+
+执行
+
+* 添加PATH路径
+* 执行`~/.bashrc`文件
+
+### ~/.bashrc
+
+* 别名设置
+* 执行`/etc/.bashrc`文件
+ * 设置umask和提示符PS1
+ * 执行`/etc/profile.d/*.sh`文件
+
+### 其他配置文件
+
+* `/etc/man_db.conf`: man page文件位置
+* `~/.bash_history`: 命令历史文件
+* `~/.bash_logout`: 登出时的动作
+
+## 配置命令
+
+### source
+
+读取配置文件
+
+```
+# 修改配置文件后，将配置文件重新读取到shell中
+source <profile>
+. <profile>
+```
+
+### bash
+
+子bash程序
+
+```bash
+# 进入子bash
+bash
+
+# 退出子bash
+exit
+```
+
+### ulimit
+
+资源配额
+
+```bash
+# 查看当前bash的所有配额
+ulimit -a
+
+# 设置配额
+# -a中有说明如何设置，如-f <size>，设置新建文件的最大容量
+ulimit <limit>
+```
+
+## 环境设置
+
+### stty
+
+终端设置
+
+```bash
+# 查看终端所有的按键意义, ^代表Ctrl
+# intr - 终止执行, erase - 向后删除字符，kill - 删除当前命令行，eof - 结束输入，stop - 停止输出，start - 开始输出
+stty -a
+```
+
+### set
+
+环境设置
+
+## 命令类型
+
+* 别名：命令的别名
+* 内置命令：bash内置的命令
+* 外部命令：$PATH下的命令
+
+执行命令时，安装上述顺序执行
+
+### type
+
+查看命令信息
+
+```bash
+# 显示命令介绍（内置命令、外部命令、命令别名）
+type <command>
+
+# 显示命令类型
+# builtin - 内置命令，file - 外部命令，alias - 命令别名
+type -t <command>
+
+# 查看外部命令的完整文件名
+type -p <command>
+
+# 查看命令的所有使用情况
+type -a <command>
+```
+
+### alias
+
+别名
+
+```bash
+# 查看别名
+alias
+
+# 设置别名，登出bash时会失效
+alias <name>='command [options] ...arg'
+
+# 取消别名
+unalias <name>
+```
+
+示例
+
+```bash
+alias lm='ls -la | more'
+alias rm='rm -i'
+alias vi='vim'
+alias cls='clear'
+```
+
+## 历史命令
+
+### history
+
+* 登录时会读取~/.bash_history中的命令到当前Shell的历史命令中
+* 登出时会将当前Shell的最近HISTSIZE条历史命令写入到~/.bash_history中
+
+```
+# 查看历史命令
+history
+
+# 查看最近n条
+history <n>
+
+# 清除历史命令
+history -c
+
+# 将histfile的内容读入到历史命令
+history -r [histfile]
+
+# 将历史命令写入指定文件中，默认为~/.bash_history
+history -w [histfile]
+```
+
+### 执行历史命令
+
+```
+# 执行上一个命令
+!!
+
+# 执行第n个命令
+!<n>
+
+# 执行最近command开头的命令
+!<command>
+```
 
 ## 变量
 
@@ -120,7 +330,7 @@ echo ${PATH}
 设置变量值
 
 ```bash
-# 设置变量
+# 设置变量，登出bash时会失效
 <variable>=<value> # 变量名由字母和数字组成且数字不开头，等号左右无空格，value中无空格
 <variable>="<value>" # 特殊字符仍保留原特性，如$LANG为LANG变量，可用\转义
 <variable>='<value>' # 特殊字符为一般字符，如$LANG为$LANG
@@ -282,96 +492,4 @@ var1=${var2+expr}
 # var2存在且不为空字符串时，var1为expr
 # var2不存在或为空字符串时，var1为空字符串
 var1=${var2:+expr}
-```
-
-## 别名
-
-```bash
-# 查看别名
-alias
-
-# 设置别名
-alias <name>='command [options] ...arg'
-
-# 取消别名
-unalias <name>
-```
-
-示例
-
-```bash
-alias lm='ls -la | more'
-alias rm='rm -i'
-alias vi='vim'
-alias cls='clear'
-```
-
-## 历史命令
-
-### history
-
-* 登录时会读取~/.bash_history中的命令到当前Shell的历史命令中
-* 登出时会将dq
-
-```
-# 查看历史命令
-history
-
-# 查看最近n条
-history <n>
-
-# 清除历史命令
-history -c
-
-# 将histfile的内容读入到历史命令
-history -r [histfile]
-
-# 将历史命令写入指定文件中，默认为~/.bash_history
-history -w [histfile]
-```
-
-## 常用命令
-
-### type
-
-查看命令信息
-
-```bash
-# 显示命令介绍（内置命令、外部命令、命令别名）
-type <command>
-
-# 显示命令类型
-# builtin - 内置命令，file - 外部命令，alias - 命令别名
-type -t <command>
-
-# 查看外部命令的完整文件名
-type -p <command>
-
-# 查看命令的所有使用情况
-type -a <command>
-```
-
-### bash
-
-子bash程序
-
-```bash
-# 进入子bash
-bash
-
-# 退出子bash
-exit
-```
-
-### ulimit
-
-资源配额
-
-```bash
-# 查看当前bash的所有配额
-ulimit -a
-
-# 设置配额
-# -a中有说明如何设置，如-f <size>，设置新建文件的最大容量
-ulimit <limit>
 ```
