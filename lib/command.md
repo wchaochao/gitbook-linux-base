@@ -1,10 +1,10 @@
-# Shell命令
+# Shell
 
 标签（空格分隔）： Linux基础
 
 ---
 
-## Shell
+## 介绍
 
 与操作系统核心沟通的壳
 
@@ -21,13 +21,13 @@ cat /etc/shells
 cat /etc/passwd
 ```
 
-## 组成
+## 命令
 
 ```bash
 $ command [options] ...arg
 ```
 
-* `command`: 命令或可执行文件（绝对路径或相对路径），如`cd`
+* `command`: 命令或可执行文件（绝对路径/相对路径），如`cd`
 * `options`: 选项，可多个，如`-h, --help`
 * `arg`: 参数，可多个
 * `Space`: 分隔命令、选项、参数
